@@ -48,7 +48,7 @@
 			<id>build-image</id>
 			<build>
 				<plugins>
-					<plugin>
+			<!--		<plugin>
 						<groupId>com.google.cloud.tools</groupId>
 						<artifactId>jib-maven-plugin</artifactId>
 						<version>3.3.1</version>
@@ -65,24 +65,24 @@
 								<phase>package</phase>
 							</execution>
 						</executions>
+					</plugin>-->
+					<plugin>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
+						<configuration>
+							<image>
+								<name>exstock/${project.artifactId}:${project.version}</name>
+								<builder>paketobuildpacks/builder:full</builder>
+							</image>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>build-image</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
-<!--					<plugin>-->
-<!--						<groupId>org.springframework.boot</groupId>-->
-<!--						<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--						<configuration>-->
-<!--							<image>-->
-<!--								<name>exstock/${project.artifactId}:${project.version}</name>-->
-<!--								<builder>paketobuildpacks/builder:full</builder>-->
-<!--							</image>-->
-<!--						</configuration>-->
-<!--						<executions>-->
-<!--							<execution>-->
-<!--								<goals>-->
-<!--									<goal>build-image</goal>-->
-<!--								</goals>-->
-<!--							</execution>-->
-<!--						</executions>-->
-<!--					</plugin>-->
 				</plugins>
 			</build>
 		</profile>
