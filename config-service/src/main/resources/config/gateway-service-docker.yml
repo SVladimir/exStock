@@ -38,6 +38,12 @@ spring:
         - Path=/organization/**
         filters:
         - RewritePath=/organization/(?<path>.*), /$\{path}
+      - id: loader-service
+        uri: lb://loader-service
+        predicates:
+        - Path=/loader/**
+        filters:
+        - RewritePath=/loader/(?<path>.*), /$\{path}
       - id: openapi
         uri: http://localhost:${server.port}
         predicates:

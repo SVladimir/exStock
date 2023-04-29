@@ -89,6 +89,7 @@ services:
       - department-service
       - organization-service
       - zipkin
+      - loader-service
   mysqldb:
     container_name: mysqldb
     image: mysql:5.7
@@ -105,9 +106,8 @@ services:
     image: exstock/loader-service:1.2-SNAPSHOT
     restart: on-failure
     env_file: ./.env
-    ports:
-      - "6868:8080"
     environment:
+      SPRING_PROFILES_ACTIVE: docker
       SPRING_APPLICATION_JSON: '{
         "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
         "spring.datasource.username" : "$MYSQLDB_USER",
@@ -115,6 +115,12 @@ services:
         "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5Dialect",
         "spring.jpa.hibernate.ddl-auto" : "update"
       }'
+    ports:
+      - "8080"
+    links:
+      - config-service
+      - discovery-service
+      - zipkin
     volumes:
       - .m2:/root/.m2
     stdin_open: true
